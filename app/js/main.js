@@ -37,7 +37,10 @@ function init() {
         }
     }
 
-    // board[0][0] = 2;
+    // init scroe
+    score = 0;
+    updateScore();
+
     renderBoard();
 
 }
@@ -148,6 +151,10 @@ function moveLeft() {
                     } else if (board[i][k] == board[i][j] && !isBlockX(i, j, k, board)) {
                         showMoveAnimation(i, j, i, k);
                         board[i][k] = 2 * board[i][k];
+
+                        // add score
+                        score += board[i][k];
+
                         board[i][j] = 0;
                         continue;
                     }
@@ -156,6 +163,8 @@ function moveLeft() {
         }
     }
     setTimeout("renderBoard()", 200);
+
+    updateScore();
 
     return true;
 }
@@ -180,6 +189,10 @@ function moveRight() {
                     } else if (board[i][k] == board[i][j] && !isBlockX(i, j, k, board)) {
                         showMoveAnimation(i, j, i, k);
                         board[i][k] *= 2;
+
+                        // add score
+                        score += board[i][k];
+
                         board[i][j] = 0;
                         continue;
                     }
@@ -188,6 +201,9 @@ function moveRight() {
         }
     }
     setTimeout("renderBoard()", 200);
+
+    updateScore();
+
     return true;
 }
 
@@ -209,6 +225,10 @@ function moveUp() {
                     } else if (board[k][j] == board[i][j] && !isBlockY(i, k, j, board)) {
                         showMoveAnimation(i, j, k, j);
                         board[k][j] *= 2;
+
+                        // add score
+                        score += board[k][j];
+
                         board[i][j] = 0;
                         continue;
                     }
@@ -218,6 +238,9 @@ function moveUp() {
     }
 
     setTimeout("renderBoard()", 200);
+
+    updateScore();
+
     return true;
 }
 
@@ -239,6 +262,10 @@ function moveDown() {
                     } else if (board[k][j] == board[i][j] && !isBlockY(i, k, j, board)) {
                         showMoveAnimation(i, j, k, j);
                         board[k][j] *= 2;
+
+                        // add score
+                        score += board[k][j];
+
                         board[i][j] = 0;
                         continue;
                     }
@@ -248,6 +275,9 @@ function moveDown() {
     }
 
     setTimeout("renderBoard()", 200);
+
+    updateScore();
+
     return true;
 }
 
@@ -259,4 +289,8 @@ function isGameOver() {
 
 function gameOver() {
     setTimeout("alert('Game Over!')", 200);
+}
+
+function updateScore() {
+    $("#score").text(score);
 }
