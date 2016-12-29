@@ -78,7 +78,7 @@ function canMoveRight(board) {
     return false;
 }
 
-function canMoveTop(board) {
+function canMoveUp(board) {
     for (var i = 1; i < 4; i++) {
         for (var j = 0; j < 4; j++) {
             if (board[i][j] != 0) {
@@ -92,7 +92,7 @@ function canMoveTop(board) {
     return false;
 }
 
-function canMoveBottom(board) {
+function canMoveDown(board) {
     for (var i = 0; i < 3; i++) {
         for (var j = 0; j < 4; j++) {
             if (board[i][j] != 0) {
@@ -115,4 +115,25 @@ function watchBoard() {
         console.log("-----");
     }
     console.log("==============");
+}
+
+function noSpace(board) {
+    for (var i = 0; i < 4; i++) {
+        for (var j = 0; j < 4; j++) {
+            if (board[i][j] == 0) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+function noMove(board) {
+    if (canMoveDown(board) ||
+        canMoveUp(board) ||
+        canMoveRight(board) ||
+        canMoveLeft(board)) {
+        return false;
+    }
+    return true;
 }

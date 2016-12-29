@@ -93,7 +93,7 @@ function generateNummer() {
     // console.log(typeof(randomNum));
 
     // test board
-    watchBoard();
+    // watchBoard();
 }
 
 $(document).keydown(function (event) {
@@ -102,21 +102,25 @@ $(document).keydown(function (event) {
         case 37: // left
             if (moveLeft()) {
                 generateNummer();
+                isGameOver();
             }
             break;
         case 38: // top
-            if (moveTop()) {
+            if (moveUp()) {
                 generateNummer();
+                isGameOver();
             }
             break;
         case 39: // right
             if (moveRight()) {
                 generateNummer();
+                isGameOver();
             }
             break;
         case 40: // bottom
-            if (moveBottom()) {
+            if (moveDown()) {
                 generateNummer();
+                isGameOver();
             }
             break;
         default:
@@ -137,10 +141,12 @@ function moveLeft() {
 
                 for (var k = 0; k < j; k++) {
                     if (board[i][k] == 0 && !isBlockX(i, j, k, board)) {
+                        showMoveAnimation(i, j, i, k);
                         board[i][k] = board[i][j];
                         board[i][j] = 0;
                         continue;
                     } else if (board[i][k] == board[i][j] && !isBlockX(i, j, k, board)) {
+                        showMoveAnimation(i, j, i, k);
                         board[i][k] = 2 * board[i][k];
                         board[i][j] = 0;
                         continue;
@@ -149,7 +155,7 @@ function moveLeft() {
             }
         }
     }
-    renderBoard();
+    setTimeout("renderBoard()", 200);
 
     return true;
 }
@@ -167,10 +173,12 @@ function moveRight() {
 
                 for (var k = 3; k > j; k--) {
                     if (board[i][k] == 0 && !isBlockX(i, j, k, board)) {
+                        showMoveAnimation(i, j, i, k);
                         board[i][k] = board[i][j];
                         board[i][j] = 0;
                         continue;
                     } else if (board[i][k] == board[i][j] && !isBlockX(i, j, k, board)) {
+                        showMoveAnimation(i, j, i, k);
                         board[i][k] *= 2;
                         board[i][j] = 0;
                         continue;
@@ -179,12 +187,12 @@ function moveRight() {
             }
         }
     }
-    renderBoard();
+    setTimeout("renderBoard()", 200);
     return true;
 }
 
-function moveTop() {
-    if (!canMoveTop(board)) {
+function moveUp() {
+    if (!canMoveUp(board)) {
         return false;
     }
 
@@ -194,10 +202,12 @@ function moveTop() {
 
                 for (var k = 0; k < i; k++) {
                     if (board[k][j] == 0 && !isBlockY(i, k, j, board)) {
+                        showMoveAnimation(i, j, k, j);
                         board[k][j] = board[i][j];
                         board[i][j] = 0;
                         continue;
                     } else if (board[k][j] == board[i][j] && !isBlockY(i, k, j, board)) {
+                        showMoveAnimation(i, j, k, j);
                         board[k][j] *= 2;
                         board[i][j] = 0;
                         continue;
@@ -207,12 +217,12 @@ function moveTop() {
         }
     }
 
-    renderBoard();
+    setTimeout("renderBoard()", 200);
     return true;
 }
 
-function moveBottom() {
-    if (!canMoveBottom(board)) {
+function moveDown() {
+    if (!canMoveDown(board)) {
         return false;
     }
 
@@ -222,10 +232,12 @@ function moveBottom() {
 
                 for (var k = 3; k > i; k--) {
                     if (board[k][j] == 0 && !isBlockY(i, k, j, board)) {
+                        showMoveAnimation(i, j, k, j);
                         board[k][j] = board[i][j];
                         board[i][j] = 0;
                         continue;
                     } else if (board[k][j] == board[i][j] && !isBlockY(i, k, j, board)) {
+                        showMoveAnimation(i, j, k, j);
                         board[k][j] *= 2;
                         board[i][j] = 0;
                         continue;
@@ -235,6 +247,16 @@ function moveBottom() {
         }
     }
 
-    renderBoard();
+    setTimeout("renderBoard()", 200);
     return true;
+}
+
+function isGameOver() {
+    if (noSpace(board) && noMove(board)) {
+        gameOver();
+    }
+}
+
+function gameOver() {
+    setTimeout("alert('Game Over!')", 200);
 }

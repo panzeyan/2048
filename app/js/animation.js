@@ -10,6 +10,14 @@ function showNumber(i, j, number) {
         "height": "100px",
         "left": getPosX(i, j),
         "top": getPosY(i, j)
-    }, 200);
+    }, 100);
 
+}
+
+function showMoveAnimation(fromX, fromY, toX, toY) {
+    var theCell = $("#number-cell-"+fromX+"-"+fromY);
+    theCell.animate({
+        "left": getPosX(toX, toY),
+        "top": getPosY(toX, toY)
+    }, 200);
 }
